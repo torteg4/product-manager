@@ -8,7 +8,7 @@ const Nav = () => {
             </div>
 
             <div>
-                <Link to={"/products"}>Display Product</Link>
+                <Link to={"/products"}>Dispaly All Products</Link>
             </div>
         </>
     )

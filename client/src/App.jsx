@@ -5,6 +5,7 @@ import Form from './components/Form';
 import DisplayList from './components/DisplayList';
 import DisplayOne from './components/DisplayOne';
 import Nav from './components/Nav';
+import UpdateForm from './components/UpdateForm';
 
 function App() {
   return (
@@ -17,9 +18,9 @@ function App() {
             <Route path="/products/create" element={ <Form /> } />
             <Route path="products" element={ <DisplayList /> } />
             <Route path="/products/:id" element={ <DisplayOne /> } />
+            <Route path="/products/update/:id" element={ <UpdateForm /> } />
           </Routes>
       </BrowserRouter>
-      {/* <ProductForm/> */}
 
     </div>
   );

@@ -14,16 +14,31 @@ const DisplayList = (props) => {
             .catch((err) => console.log(err))
     }, []);
 
+    const deleteProduct = (productId) => {
+        axios.delete("http://localhost:8000/api/products/" + productId)
+            .then(() => {
+                console.log("Successfully deleted from the backend")
+                removeFromDom(productId)
+            })
+            .catch (err => console.log("Something went wrong when deleting product on displayList", err))
+    };
+
+    const removeFromDom = (productId) => {
+        setProductList(productList.filter( p => p._id !== productId))
+    }
+
 
 
     return (
         <div>
-            <h3>All Products:</h3>
+            <h3>Products Available:</h3>
             {productList.length > 0 && productList.map((product,index) => (
                 <>
                 <Link to = {'/products/' + product._id}>
                     <h5>{product.title}</h5>
                 </Link> 
+
+                <button onClick={() => deleteProduct(product._id)}>Delete</button>
                 </>
             )
             )}
