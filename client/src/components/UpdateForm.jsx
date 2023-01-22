@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 
 const UpdateForm = (props) => {
@@ -9,6 +9,7 @@ const UpdateForm = (props) => {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
+    const navigate = useNavigate();
     
     useEffect (() => {    
     axios.get('http://localhost:8000/api/products/' + id)
@@ -31,7 +32,10 @@ const UpdateForm = (props) => {
         }
 
         axios.put('http://localhost:8000/api/products/' + id, updatedProduct)
-        .then( () => console.log("Update on backend successful"))
+        .then( () => {
+            console.log("Update on backend successful");
+            navigate("/products");
+        })
         // console.log(res.data);// always console log to get used to tracking your data
         .catch( (err) => console.log(err));
     }

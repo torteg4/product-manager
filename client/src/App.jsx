@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route index />
             <Route path="/products/create" element={ <Form /> } />
-            <Route path="products" element={ <DisplayList /> } />
+            <Route path="/products" element={ <DisplayList /> } />
             <Route path="/products/:id" element={ <DisplayOne /> } />
             <Route path="/products/update/:id" element={ <UpdateForm /> } />
           </Routes>
