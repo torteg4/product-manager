@@ -7,4 +7,4 @@ module.exports = (app) => {
     app.post('/api/products', ProductController.create);
     app.put('/api/products/:id', ProductController.update)
     app.delete('/api/products/:id', ProductController.destroy)
-}
+};
