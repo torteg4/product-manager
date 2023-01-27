@@ -8,7 +8,9 @@ const UpdateForm = (props) => {
     const {id} = useParams();
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
+    const [type, setType] = useState("");
     const [description, setDescription] = useState("");
+    const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
     
     useEffect (() => {    
@@ -17,6 +19,7 @@ const UpdateForm = (props) => {
         .then( (res) => {
             setTitle(res.data.title)
             setPrice(res.data.price)
+            setType(res.data.type)
             setDescription(res.data.description)
         })
         .catch( (err) => console.log("Something went wrong with updating", err));
@@ -28,6 +31,7 @@ const UpdateForm = (props) => {
         const updatedProduct = {
             title,
             price,
+            type,
             description,
         }
 
@@ -37,7 +41,15 @@ const UpdateForm = (props) => {
             navigate("/products");
         })
         // console.log(res.data);// always console log to get used to tracking your data
-        .catch( (err) => console.log(err));
+        .catch( (err) =>  {
+            const errorResponse = err.response.data.errors;
+
+            const errorArr = [];
+            for (const key of Object.keys(errorResponse)) {
+                errorArr.push(errorResponse[key].message)
+            }
+            setErrors(errorArr);
+        });
     }
 
     return (
@@ -45,6 +57,8 @@ const UpdateForm = (props) => {
             <div className= "container">
                 <h3>Update Product</h3>
                 <form onSubmit = { onSubmitHandler }>
+
+                {errors.map((err, index) => <p key={index} className="text-danger">{err}</p>)}
 
                 <div class="mb-3">
                     <label>Title</label>
@@ -66,6 +80,20 @@ const UpdateForm = (props) => {
                         onChange={(e) => setPrice(e.target.value)}
                             />
                 </div>
+
+                <div>
+                        <label class="form-label">Type: </label>
+                        <select 
+                            onChange={(e) => setType(e.target.value)}
+                            value={type}>
+                                <option value="dog">Dog</option>
+                                <option value="cat">Cat</option>
+                                <option value="pokemon">Pokemon</option>
+                                <option value="bird">Bird</option>
+                                <option value="rabbit">Rabbit</option>
+                                <option value="other">Other</option>
+                        </select>
+                    </div>
 
                 <div class="mb-3">
                     <label class="form-label">Description</label>

@@ -20,7 +20,7 @@ module.exports ={
         Product.findById(req.params.id)
             .then((product) => res.json(product))
             .catch((err) => 
-                res.json({message: "Something went wrong with findOne()", error:err})
+                res.status(400).json({message: "Something went wrong with findOne()", error:err})
         );
     },
 
@@ -29,15 +29,15 @@ module.exports ={
         Product.create(req.body)
             .then((createdProduct) => res.json(createdProduct))
             .catch((err) => 
-                res.json({ message: 'Something went wrong with create()', error:err })
+                res.status(400).json(err)
         );
     },
 
     update: (req,res) => {
-        Product.findByIdAndUpdate(req.params.id, req.body)
+        Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
             .then((updatedProduct) => res.json(updatedProduct))
             .catch ((err) =>
-                res.json({message: "Something went wrong with findByIdAndUpdate()", error:err})
+                res.status(400).json(err)
             );
     },
 
